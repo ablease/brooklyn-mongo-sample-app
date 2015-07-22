@@ -6,7 +6,9 @@ class CloudFoundryEnvironment
   end
 
   def mongo_uri
-    services.fetch("p-mongodb").first.fetch("credentials").fetch("uri")
+    url = services['br_MongoDB'][0]['credentials']['MongoDB Server']['mongodb.server.endpoint'].split('http://')[-1]
+    protocol = "mongodb://"
+    protocol + url
   rescue KeyError
     raise NoMongodbBoundError
   end
